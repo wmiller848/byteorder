@@ -16,13 +16,16 @@ license = "Unlicense/MIT"
 name = "byteorder"
 bench = false
 
+[dependencies]
+nostd_io = { git = "https://github.com/wmiller848/nostd_io.git" }
+
 [dev-dependencies]
 quickcheck = { version = "0.6", default-features = false }
 rand = "0.4"
 
 [features]
-default = ["std"]
-std = []
+default = ["nostd"]
+nostd = []
 i128 = []
 
 [profile.bench]

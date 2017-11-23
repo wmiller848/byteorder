@@ -1,82 +1,80 @@
-/*!
-This crate provides convenience methods for encoding and decoding numbers
-in either [big-endian or little-endian order].
-
-The organization of the crate is pretty simple. A trait, [`ByteOrder`], specifies
-byte conversion methods for each type of number in Rust (sans numbers that have
-a platform dependent size like `usize` and `isize`). Two types, [`BigEndian`]
-and [`LittleEndian`] implement these methods. Finally, [`ReadBytesExt`] and
-[`WriteBytesExt`] provide convenience methods available to all types that
-implement [`Read`] and [`Write`].
-
-An alias, [`NetworkEndian`], for [`BigEndian`] is provided to help improve
-code clarity.
-
-An additional alias, [`NativeEndian`], is provided for the endianness of the
-local platform. This is convenient when serializing data for use and
-conversions are not desired.
-
-# Examples
-
-Read unsigned 16 bit big-endian integers from a [`Read`] type:
-
-```rust
-use std::io::Cursor;
-use byteorder::{BigEndian, ReadBytesExt};
-
-let mut rdr = Cursor::new(vec![2, 5, 3, 0]);
-// Note that we use type parameters to indicate which kind of byte order
-// we want!
-assert_eq!(517, rdr.read_u16::<BigEndian>().unwrap());
-assert_eq!(768, rdr.read_u16::<BigEndian>().unwrap());
-```
-
-Write unsigned 16 bit little-endian integers to a [`Write`] type:
-
-```rust
-use byteorder::{LittleEndian, WriteBytesExt};
-
-let mut wtr = vec![];
-wtr.write_u16::<LittleEndian>(517).unwrap();
-wtr.write_u16::<LittleEndian>(768).unwrap();
-assert_eq!(wtr, vec![5, 2, 0, 3]);
-```
-
-# Optional Features
-
-This crate optionally provides support for 128 bit values (`i128` and `u128`)
-when built with the `i128` feature enabled.
-
-This crate can also be used without the standard library.
-
-[big-endian or little-endian order]: https://en.wikipedia.org/wiki/Endianness
-[`ByteOrder`]: trait.ByteOrder.html
-[`BigEndian`]: enum.BigEndian.html
-[`LittleEndian`]: enum.LittleEndian.html
-[`ReadBytesExt`]: trait.ReadBytesExt.html
-[`WriteBytesExt`]: trait.WriteBytesExt.html
-[`NetworkEndian`]: type.NetworkEndian.html
-[`NativeEndian`]: type.NativeEndian.html
-[`Read`]: https://doc.rust-lang.org/std/io/trait.Read.html
-[`Write`]: https://doc.rust-lang.org/std/io/trait.Write.html
-*/
+//! This crate provides convenience methods for encoding and decoding numbers
+//! in either [big-endian or little-endian order].
+//!
+//! The organization of the crate is pretty simple. A trait, [`ByteOrder`], specifies
+//! byte conversion methods for each type of number in Rust (sans numbers that have
+//! a platform dependent size like `usize` and `isize`). Two types, [`BigEndian`]
+//! and [`LittleEndian`] implement these methods. Finally, [`ReadBytesExt`] and
+//! [`WriteBytesExt`] provide convenience methods available to all types that
+//! implement [`Read`] and [`Write`].
+//!
+//! An alias, [`NetworkEndian`], for [`BigEndian`] is provided to help improve
+//! code clarity.
+//!
+//! An additional alias, [`NativeEndian`], is provided for the endianness of the
+//! local platform. This is convenient when serializing data for use and
+//! conversions are not desired.
+//!
+//! # Examples
+//!
+//! Read unsigned 16 bit big-endian integers from a [`Read`] type:
+//!
+//! ```rust
+//! use std::io::Cursor;
+//! use byteorder::{BigEndian, ReadBytesExt};
+//!
+//! let mut rdr = Cursor::new(vec![2, 5, 3, 0]);
+//! Note that we use type parameters to indicate which kind of byte order
+//! we want!
+//! assert_eq!(517, rdr.read_u16::<BigEndian>().unwrap());
+//! assert_eq!(768, rdr.read_u16::<BigEndian>().unwrap());
+//! ```
+//!
+//! Write unsigned 16 bit little-endian integers to a [`Write`] type:
+//!
+//! ```rust
+//! use byteorder::{LittleEndian, WriteBytesExt};
+//!
+//! let mut wtr = vec![];
+//! wtr.write_u16::<LittleEndian>(517).unwrap();
+//! wtr.write_u16::<LittleEndian>(768).unwrap();
+//! assert_eq!(wtr, vec![5, 2, 0, 3]);
+//! ```
+//!
+//! # Optional Features
+//!
+//! This crate optionally provides support for 128 bit values (`i128` and `u128`)
+//! when built with the `i128` feature enabled.
+//!
+//! This crate can also be used without the standard library.
+//!
+//! [big-endian or little-endian order]: https://en.wikipedia.org/wiki/Endianness
+//! [`ByteOrder`]: trait.ByteOrder.html
+//! [`BigEndian`]: enum.BigEndian.html
+//! [`LittleEndian`]: enum.LittleEndian.html
+//! [`ReadBytesExt`]: trait.ReadBytesExt.html
+//! [`WriteBytesExt`]: trait.WriteBytesExt.html
+//! [`NetworkEndian`]: type.NetworkEndian.html
+//! [`NativeEndian`]: type.NativeEndian.html
+//! [`Read`]: https://doc.rust-lang.org/std/io/trait.Read.html
+//! [`Write`]: https://doc.rust-lang.org/std/io/trait.Write.html
+//!
 
 #![deny(missing_docs)]
-#![cfg_attr(not(feature = "std"), no_std)]
+#![no_std]
 #![doc(html_root_url = "https://docs.rs/byteorder/1.2.1")]
 
 #[cfg(feature = "std")]
 extern crate core;
+extern crate nostd_io;
 
 use core::fmt::Debug;
 use core::hash::Hash;
 use core::ptr::copy_nonoverlapping;
 use core::slice;
 
-#[cfg(feature = "std")]
 pub use io::{ReadBytesExt, WriteBytesExt};
 
-#[cfg(feature = "std")]
 mod io;
 
 #[inline]
@@ -167,7 +165,7 @@ fn pack_size128(n: u128) -> usize {
 mod private {
     /// Sealed stops crates other than byteorder from implementing any traits
     /// that use it.
-    pub trait Sealed{}
+    pub trait Sealed {}
     impl Sealed for super::LittleEndian {}
     impl Sealed for super::BigEndian {}
 }
@@ -208,9 +206,8 @@ mod private {
 /// [`BigEndian`]: enum.BigEndian.html
 /// [`LittleEndian`]: enum.LittleEndian.html
 pub trait ByteOrder
-    : Clone + Copy + Debug + Default + Eq + Hash + Ord + PartialEq + PartialOrd
-    + private::Sealed
-{
+    : Clone + Copy + Debug + Default + Eq + Hash + Ord + PartialEq + PartialOrd + private::Sealed
+    {
     /// Reads an unsigned 16 bit integer from `buf`.
     ///
     /// # Panics
@@ -1003,9 +1000,7 @@ pub trait ByteOrder
     /// ```
     #[inline]
     fn read_i16_into(src: &[u8], dst: &mut [i16]) {
-        let dst = unsafe {
-            slice::from_raw_parts_mut(dst.as_mut_ptr() as *mut u16, dst.len())
-        };
+        let dst = unsafe { slice::from_raw_parts_mut(dst.as_mut_ptr() as *mut u16, dst.len()) };
         Self::read_u16_into(src, dst)
     }
 
@@ -1032,9 +1027,7 @@ pub trait ByteOrder
     /// ```
     #[inline]
     fn read_i32_into(src: &[u8], dst: &mut [i32]) {
-        let dst = unsafe {
-            slice::from_raw_parts_mut(dst.as_mut_ptr() as *mut u32, dst.len())
-        };
+        let dst = unsafe { slice::from_raw_parts_mut(dst.as_mut_ptr() as *mut u32, dst.len()) };
         Self::read_u32_into(src, dst);
     }
 
@@ -1061,9 +1054,7 @@ pub trait ByteOrder
     /// ```
     #[inline]
     fn read_i64_into(src: &[u8], dst: &mut [i64]) {
-        let dst = unsafe {
-            slice::from_raw_parts_mut(dst.as_mut_ptr() as *mut u64, dst.len())
-        };
+        let dst = unsafe { slice::from_raw_parts_mut(dst.as_mut_ptr() as *mut u64, dst.len()) };
         Self::read_u64_into(src, dst);
     }
 
@@ -1091,9 +1082,7 @@ pub trait ByteOrder
     #[cfg(feature = "i128")]
     #[inline]
     fn read_i128_into(src: &[u8], dst: &mut [i128]) {
-        let dst = unsafe {
-            slice::from_raw_parts_mut(dst.as_mut_ptr() as *mut u128, dst.len())
-        };
+        let dst = unsafe { slice::from_raw_parts_mut(dst.as_mut_ptr() as *mut u128, dst.len()) };
         Self::read_u128_into(src, dst);
     }
 
@@ -1121,9 +1110,7 @@ pub trait ByteOrder
     /// ```
     #[inline]
     fn read_f32_into_unchecked(src: &[u8], dst: &mut [f32]) {
-        let dst = unsafe {
-            slice::from_raw_parts_mut(dst.as_mut_ptr() as *mut u32, dst.len())
-        };
+        let dst = unsafe { slice::from_raw_parts_mut(dst.as_mut_ptr() as *mut u32, dst.len()) };
         Self::read_u32_into(src, dst);
     }
 
@@ -1151,9 +1138,7 @@ pub trait ByteOrder
     /// ```
     #[inline]
     fn read_f64_into_unchecked(src: &[u8], dst: &mut [f64]) {
-        let dst = unsafe {
-            slice::from_raw_parts_mut(dst.as_mut_ptr() as *mut u64, dst.len())
-        };
+        let dst = unsafe { slice::from_raw_parts_mut(dst.as_mut_ptr() as *mut u64, dst.len()) };
         Self::read_u64_into(src, dst);
     }
 
@@ -1272,9 +1257,7 @@ pub trait ByteOrder
     /// assert_eq!(numbers_given, numbers_got);
     /// ```
     fn write_i16_into(src: &[i16], dst: &mut [u8]) {
-        let src = unsafe {
-            slice::from_raw_parts(src.as_ptr() as *const u16, src.len())
-        };
+        let src = unsafe { slice::from_raw_parts(src.as_ptr() as *const u16, src.len()) };
         Self::write_u16_into(src, dst);
     }
 
@@ -1300,9 +1283,7 @@ pub trait ByteOrder
     /// assert_eq!(numbers_given, numbers_got);
     /// ```
     fn write_i32_into(src: &[i32], dst: &mut [u8]) {
-        let src = unsafe {
-            slice::from_raw_parts(src.as_ptr() as *const u32, src.len())
-        };
+        let src = unsafe { slice::from_raw_parts(src.as_ptr() as *const u32, src.len()) };
         Self::write_u32_into(src, dst);
     }
 
@@ -1328,9 +1309,7 @@ pub trait ByteOrder
     /// assert_eq!(numbers_given, numbers_got);
     /// ```
     fn write_i64_into(src: &[i64], dst: &mut [u8]) {
-        let src = unsafe {
-            slice::from_raw_parts(src.as_ptr() as *const u64, src.len())
-        };
+        let src = unsafe { slice::from_raw_parts(src.as_ptr() as *const u64, src.len()) };
         Self::write_u64_into(src, dst);
     }
 
@@ -1357,9 +1336,7 @@ pub trait ByteOrder
     /// ```
     #[cfg(feature = "i128")]
     fn write_i128_into(src: &[i128], dst: &mut [u8]) {
-        let src = unsafe {
-            slice::from_raw_parts(src.as_ptr() as *const u128, src.len())
-        };
+        let src = unsafe { slice::from_raw_parts(src.as_ptr() as *const u128, src.len()) };
         Self::write_u128_into(src, dst);
     }
 
@@ -1388,9 +1365,7 @@ pub trait ByteOrder
     /// assert_eq!(numbers_given, numbers_got);
     /// ```
     fn write_f32_into(src: &[f32], dst: &mut [u8]) {
-        let src = unsafe {
-            slice::from_raw_parts(src.as_ptr() as *const u32, src.len())
-        };
+        let src = unsafe { slice::from_raw_parts(src.as_ptr() as *const u32, src.len()) };
         Self::write_u32_into(src, dst);
     }
 
@@ -1419,9 +1394,7 @@ pub trait ByteOrder
     /// assert_eq!(numbers_given, numbers_got);
     /// ```
     fn write_f64_into(src: &[f64], dst: &mut [u8]) {
-        let src = unsafe {
-            slice::from_raw_parts(src.as_ptr() as *const u64, src.len())
-        };
+        let src = unsafe { slice::from_raw_parts(src.as_ptr() as *const u64, src.len()) };
         Self::write_u64_into(src, dst);
     }
 
@@ -1521,9 +1494,7 @@ pub trait ByteOrder
     /// ```
     #[inline]
     fn from_slice_i16(src: &mut [i16]) {
-        let src = unsafe {
-            slice::from_raw_parts_mut(src.as_ptr() as *mut u16, src.len())
-        };
+        let src = unsafe { slice::from_raw_parts_mut(src.as_ptr() as *mut u16, src.len()) };
         Self::from_slice_u16(src);
     }
 
@@ -1546,9 +1517,7 @@ pub trait ByteOrder
     /// ```
     #[inline]
     fn from_slice_i32(src: &mut [i32]) {
-        let src = unsafe {
-            slice::from_raw_parts_mut(src.as_ptr() as *mut u32, src.len())
-        };
+        let src = unsafe { slice::from_raw_parts_mut(src.as_ptr() as *mut u32, src.len()) };
         Self::from_slice_u32(src);
     }
 
@@ -1571,9 +1540,7 @@ pub trait ByteOrder
     /// ```
     #[inline]
     fn from_slice_i64(src: &mut [i64]) {
-        let src = unsafe {
-            slice::from_raw_parts_mut(src.as_ptr() as *mut u64, src.len())
-        };
+        let src = unsafe { slice::from_raw_parts_mut(src.as_ptr() as *mut u64, src.len()) };
         Self::from_slice_u64(src);
     }
 
@@ -1597,9 +1564,7 @@ pub trait ByteOrder
     #[cfg(feature = "i128")]
     #[inline]
     fn from_slice_i128(src: &mut [i128]) {
-        let src = unsafe {
-            slice::from_raw_parts_mut(src.as_ptr() as *mut u128, src.len())
-        };
+        let src = unsafe { slice::from_raw_parts_mut(src.as_ptr() as *mut u128, src.len()) };
         Self::from_slice_u128(src);
     }
 
@@ -1821,8 +1786,7 @@ impl ByteOrder for BigEndian {
         let mut out = [0u8; 8];
         let ptr_out = out.as_mut_ptr();
         unsafe {
-            copy_nonoverlapping(
-                buf.as_ptr(), ptr_out.offset((8 - nbytes) as isize), nbytes);
+            copy_nonoverlapping(buf.as_ptr(), ptr_out.offset((8 - nbytes) as isize), nbytes);
             (*(ptr_out as *const u64)).to_be()
         }
     }
@@ -1834,8 +1798,7 @@ impl ByteOrder for BigEndian {
         let mut out = [0u8; 16];
         let ptr_out = out.as_mut_ptr();
         unsafe {
-            copy_nonoverlapping(
-                buf.as_ptr(), ptr_out.offset((16 - nbytes) as isize), nbytes);
+            copy_nonoverlapping(buf.as_ptr(), ptr_out.offset((16 - nbytes) as isize), nbytes);
             (*(ptr_out as *const u128)).to_be()
         }
     }
@@ -1867,10 +1830,9 @@ impl ByteOrder for BigEndian {
         assert!(nbytes <= buf.len());
         unsafe {
             let bytes = *(&n.to_be() as *const u64 as *const [u8; 8]);
-            copy_nonoverlapping(
-                bytes.as_ptr().offset((8 - nbytes) as isize),
-                buf.as_mut_ptr(),
-                nbytes);
+            copy_nonoverlapping(bytes.as_ptr().offset((8 - nbytes) as isize),
+                                buf.as_mut_ptr(),
+                                nbytes);
         }
     }
 
@@ -1881,10 +1843,9 @@ impl ByteOrder for BigEndian {
         assert!(nbytes <= buf.len());
         unsafe {
             let bytes = *(&n.to_be() as *const u128 as *const [u8; 16]);
-            copy_nonoverlapping(
-                bytes.as_ptr().offset((16 - nbytes) as isize),
-                buf.as_mut_ptr(),
-                nbytes);
+            copy_nonoverlapping(bytes.as_ptr().offset((16 - nbytes) as isize),
+                                buf.as_mut_ptr(),
+                                nbytes);
         }
     }
 
@@ -2222,7 +2183,8 @@ mod test {
 
     use self::quickcheck::{QuickCheck, StdGen, Testable};
     use self::rand::thread_rng;
-    #[cfg(feature = "i128")] use self::quickcheck::{Arbitrary, Gen};
+    #[cfg(feature = "i128")]
+    use self::quickcheck::{Arbitrary, Gen};
 
     pub const U24_MAX: u32 = 16_777_215;
     pub const I24_MAX: i32 = 8_388_607;
@@ -2257,9 +2219,7 @@ mod test {
     impl Arbitrary for Wi128<u128> {
         fn arbitrary<G: Gen>(gen: &mut G) -> Wi128<u128> {
             let max = calc_max!(::core::u128::MAX, gen.size(), 16);
-            let output =
-                (gen.gen::<u64>() as u128) |
-                ((gen.gen::<u64>() as u128) << 64);
+            let output = (gen.gen::<u64>() as u128) | ((gen.gen::<u64>() as u128) << 64);
             Wi128(output & (max - 1))
         }
     }
@@ -2268,9 +2228,7 @@ mod test {
     impl Arbitrary for Wi128<i128> {
         fn arbitrary<G: Gen>(gen: &mut G) -> Wi128<i128> {
             let max = calc_max!(::core::i128::MAX, gen.size(), 16);
-            let output =
-                (gen.gen::<i64>() as i128) |
-                ((gen.gen::<i64>() as i128) << 64);
+            let output = (gen.gen::<i64>() as i128) | ((gen.gen::<i64>() as i128) << 64);
             Wi128(output & (max - 1))
         }
     }
@@ -2793,7 +2751,7 @@ mod test {
 }
 
 #[cfg(test)]
-#[cfg(feature = "std")]
+#[cfg(feature = "nostd_io")]
 mod stdtests {
     extern crate quickcheck;
     extern crate rand;
@@ -2818,7 +2776,7 @@ mod stdtests {
         ($name:ident, $ty_int:ty, $max:expr,
          $bytes:expr, $read:ident, $write:ident) => (
             mod $name {
-                use std::io::Cursor;
+                use nostd_io::Cursor;
                 use {
                     ReadBytesExt, WriteBytesExt,
                     BigEndian, NativeEndian, LittleEndian,
@@ -2867,7 +2825,7 @@ mod stdtests {
         );
         ($name:ident, $ty_int:ty, $max:expr, $read:ident, $write:ident) => (
             mod $name {
-                use std::io::Cursor;
+                use nostd_io::Cursor;
                 use {
                     ReadBytesExt, WriteBytesExt,
                     BigEndian, NativeEndian, LittleEndian,

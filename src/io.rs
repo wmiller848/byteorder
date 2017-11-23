@@ -1,9 +1,8 @@
-use std::io::{self, Result};
-use std::slice;
+use nostd_io::{self, Result, Read, Write};
+use core::slice;
 
 use ByteOrder;
-
-/// Extends [`Read`] with methods for reading numbers. (For `std::io`.)
+/// Extends [`Read`] with methods for reading numbers. (For `nostd_io`.)
 ///
 /// Most of the methods defined here have an unconstrained type parameter that
 /// must be explicitly instantiated. Typically, it is instantiated with either
@@ -14,7 +13,8 @@ use ByteOrder;
 /// Read unsigned 16 bit big-endian integers from a [`Read`]:
 ///
 /// ```rust
-/// use std::io::Cursor;
+/// extern crate nostd_io;
+/// use nostd_io::Cursor;
 /// use byteorder::{BigEndian, ReadBytesExt};
 ///
 /// let mut rdr = Cursor::new(vec![2, 5, 3, 0]);
@@ -25,7 +25,7 @@ use ByteOrder;
 /// [`BigEndian`]: enum.BigEndian.html
 /// [`LittleEndian`]: enum.LittleEndian.html
 /// [`Read`]: https://doc.rust-lang.org/std/io/trait.Read.html
-pub trait ReadBytesExt: io::Read {
+pub trait ReadBytesExt: Read {
     /// Reads an unsigned 8 bit integer from the underlying reader.
     ///
     /// Note that since this reads a single byte, no byte order conversions
@@ -42,7 +42,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read unsigned 8 bit integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![2, 5]);
@@ -72,7 +73,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read unsigned 8 bit integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![0x02, 0xfb]);
@@ -99,7 +101,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read unsigned 16 bit big-endian integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![2, 5, 3, 0]);
@@ -126,7 +129,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read signed 16 bit big-endian integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![0x00, 0xc1, 0xff, 0x7c]);
@@ -153,7 +157,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read unsigned 24 bit big-endian integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![0x00, 0x01, 0x0b]);
@@ -179,7 +184,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read signed 24 bit big-endian integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![0xff, 0x7a, 0x33]);
@@ -205,7 +211,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read unsigned 32 bit big-endian integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![0x00, 0x00, 0x01, 0x0b]);
@@ -231,7 +238,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read signed 32 bit big-endian integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![0xff, 0xff, 0x7a, 0x33]);
@@ -257,7 +265,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read an unsigned 64 bit big-endian integer from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![0x00, 0x03, 0x43, 0x95, 0x4d, 0x60, 0x86, 0x83]);
@@ -283,7 +292,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read a signed 64 bit big-endian integer from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![0x80, 0, 0, 0, 0, 0, 0, 0]);
@@ -309,7 +319,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read an unsigned 128 bit big-endian integer from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![
@@ -340,7 +351,8 @@ pub trait ReadBytesExt: io::Read {
     ///
     /// ```rust
     /// #![feature(i128_type)]
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
@@ -367,7 +379,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read an unsigned n-byte big-endian integer from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![0x80, 0x74, 0xfa]);
@@ -392,7 +405,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read an unsigned n-byte big-endian integer from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![0xc1, 0xff, 0x7c]);
@@ -436,8 +450,9 @@ pub trait ReadBytesExt: io::Read {
     /// Read a big-endian single-precision floating point number from a `Read`:
     ///
     /// ```rust
+    /// extern crate nostd_io;
     /// use std::f32;
-    /// use std::io::Cursor;
+    /// use nostd_io::Cursor;
     ///
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -467,8 +482,9 @@ pub trait ReadBytesExt: io::Read {
     /// Read a big-endian double-precision floating point number from a `Read`:
     ///
     /// ```rust
+    /// extern crate nostd_io;
     /// use std::f64;
-    /// use std::io::Cursor;
+    /// use nostd_io::Cursor;
     ///
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -501,7 +517,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read a sequence of unsigned 16 bit big-endian integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![2, 5, 3, 0]);
@@ -536,7 +553,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read a sequence of unsigned 32 bit big-endian integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![0, 0, 2, 5, 0, 0, 3, 0]);
@@ -571,7 +589,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read a sequence of unsigned 64 bit big-endian integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![
@@ -609,7 +628,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read a sequence of unsigned 128 bit big-endian integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![
@@ -622,10 +642,7 @@ pub trait ReadBytesExt: io::Read {
     /// ```
     #[cfg(feature = "i128")]
     #[inline]
-    fn read_u128_into<T: ByteOrder>(
-        &mut self,
-        dst: &mut [u128],
-    ) -> Result<()> {
+    fn read_u128_into<T: ByteOrder>(&mut self, dst: &mut [u128]) -> Result<()> {
         {
             let buf = unsafe { slice_to_u8_mut(dst) };
             try!(self.read_exact(buf));
@@ -651,7 +668,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read a sequence of signed 16 bit big-endian integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![2, 5, 3, 0]);
@@ -686,7 +704,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read a sequence of signed 32 bit big-endian integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![0, 0, 2, 5, 0, 0, 3, 0]);
@@ -721,7 +740,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read a sequence of signed 64 bit big-endian integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![
@@ -759,7 +779,8 @@ pub trait ReadBytesExt: io::Read {
     /// Read a sequence of signed 128 bit big-endian integers from a `Read`:
     ///
     /// ```rust
-    /// use std::io::Cursor;
+    /// extern crate nostd_io;
+    /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
     /// let mut rdr = Cursor::new(vec![
@@ -772,10 +793,7 @@ pub trait ReadBytesExt: io::Read {
     /// ```
     #[cfg(feature = "i128")]
     #[inline]
-    fn read_i128_into<T: ByteOrder>(
-        &mut self,
-        dst: &mut [i128],
-    ) -> Result<()> {
+    fn read_i128_into<T: ByteOrder>(&mut self, dst: &mut [i128]) -> Result<()> {
         {
             let buf = unsafe { slice_to_u8_mut(dst) };
             try!(self.read_exact(buf));
@@ -816,10 +834,7 @@ pub trait ReadBytesExt: io::Read {
     /// assert_eq!([f32::consts::PI, 1.0], dst);
     /// ```
     #[inline]
-    fn read_f32_into<T: ByteOrder>(
-        &mut self,
-        dst: &mut [f32],
-    ) -> Result<()> {
+    fn read_f32_into<T: ByteOrder>(&mut self, dst: &mut [f32]) -> Result<()> {
         {
             let buf = unsafe { slice_to_u8_mut(dst) };
             try!(self.read_exact(buf));
@@ -850,8 +865,9 @@ pub trait ReadBytesExt: io::Read {
     /// from a `Read`:
     ///
     /// ```rust
+    /// extern crate nostd_io;
     /// use std::f32;
-    /// use std::io::Cursor;
+    /// use nostd_io::Cursor;
     ///
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -865,10 +881,7 @@ pub trait ReadBytesExt: io::Read {
     /// ```
     #[inline]
     #[deprecated(since="1.2.0", note="please use `read_f32_into` instead")]
-    fn read_f32_into_unchecked<T: ByteOrder>(
-        &mut self,
-        dst: &mut [f32],
-    ) -> Result<()> {
+    fn read_f32_into_unchecked<T: ByteOrder>(&mut self, dst: &mut [f32]) -> Result<()> {
         self.read_f32_into::<T>(dst)
     }
 
@@ -904,10 +917,7 @@ pub trait ReadBytesExt: io::Read {
     /// assert_eq!([f64::consts::PI, 1.0], dst);
     /// ```
     #[inline]
-    fn read_f64_into<T: ByteOrder>(
-        &mut self,
-        dst: &mut [f64],
-    ) -> Result<()> {
+    fn read_f64_into<T: ByteOrder>(&mut self, dst: &mut [f64]) -> Result<()> {
         {
             let buf = unsafe { slice_to_u8_mut(dst) };
             try!(self.read_exact(buf));
@@ -944,8 +954,9 @@ pub trait ReadBytesExt: io::Read {
     /// from a `Read`:
     ///
     /// ```rust
+    /// extern crate nostd_io;
     /// use std::f64;
-    /// use std::io::Cursor;
+    /// use nostd_io::Cursor;
     ///
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -959,19 +970,16 @@ pub trait ReadBytesExt: io::Read {
     /// ```
     #[inline]
     #[deprecated(since="1.2.0", note="please use `read_f64_into` instead")]
-    fn read_f64_into_unchecked<T: ByteOrder>(
-        &mut self,
-        dst: &mut [f64],
-    ) -> Result<()> {
+    fn read_f64_into_unchecked<T: ByteOrder>(&mut self, dst: &mut [f64]) -> Result<()> {
         self.read_f64_into::<T>(dst)
     }
 }
 
 /// All types that implement `Read` get methods defined in `ReadBytesExt`
 /// for free.
-impl<R: io::Read + ?Sized> ReadBytesExt for R {}
+impl<R: Read + ?Sized> ReadBytesExt for R {}
 
-/// Extends [`Write`] with methods for writing numbers. (For `std::io`.)
+/// Extends [`Write`] with methods for writing numbers. (For `nostd_io`.)
 ///
 /// Most of the methods defined here have an unconstrained type parameter that
 /// must be explicitly instantiated. Typically, it is instantiated with either
@@ -993,7 +1001,7 @@ impl<R: io::Read + ?Sized> ReadBytesExt for R {}
 /// [`BigEndian`]: enum.BigEndian.html
 /// [`LittleEndian`]: enum.LittleEndian.html
 /// [`Write`]: https://doc.rust-lang.org/std/io/trait.Write.html
-pub trait WriteBytesExt: io::Write {
+pub trait WriteBytesExt: Write {
     /// Writes an unsigned 8 bit integer to the underlying writer.
     ///
     /// Note that since this writes a single byte, no byte order conversions
@@ -1167,11 +1175,7 @@ pub trait WriteBytesExt: io::Write {
     /// If the given integer is not representable in the given number of bytes,
     /// this method panics. If `nbytes > 8`, this method panics.
     #[inline]
-    fn write_uint<T: ByteOrder>(
-        &mut self,
-        n: u64,
-        nbytes: usize,
-    ) -> Result<()> {
+    fn write_uint<T: ByteOrder>(&mut self, n: u64, nbytes: usize) -> Result<()> {
         let mut buf = [0; 8];
         T::write_uint(&mut buf, n, nbytes);
         self.write_all(&buf[0..nbytes])
@@ -1190,11 +1194,7 @@ pub trait WriteBytesExt: io::Write {
     /// If the given integer is not representable in the given number of bytes,
     /// this method panics. If `nbytes > 8`, this method panics.
     #[inline]
-    fn write_int<T: ByteOrder>(
-        &mut self,
-        n: i64,
-        nbytes: usize,
-    ) -> Result<()> {
+    fn write_int<T: ByteOrder>(&mut self, n: i64, nbytes: usize) -> Result<()> {
         let mut buf = [0; 8];
         T::write_int(&mut buf, n, nbytes);
         self.write_all(&buf[0..nbytes])
@@ -1206,11 +1206,7 @@ pub trait WriteBytesExt: io::Write {
     /// this method panics. If `nbytes > 16`, this method panics.
     #[cfg(feature = "i128")]
     #[inline]
-    fn write_uint128<T: ByteOrder>(
-        &mut self,
-        n: u128,
-        nbytes: usize,
-    ) -> Result<()> {
+    fn write_uint128<T: ByteOrder>(&mut self, n: u128, nbytes: usize) -> Result<()> {
         let mut buf = [0; 16];
         T::write_uint128(&mut buf, n, nbytes);
         self.write_all(&buf[0..nbytes])
@@ -1222,11 +1218,7 @@ pub trait WriteBytesExt: io::Write {
     /// this method panics. If `nbytes > 16`, this method panics.
     #[cfg(feature = "i128")]
     #[inline]
-    fn write_int128<T: ByteOrder>(
-        &mut self,
-        n: i128,
-        nbytes: usize,
-    ) -> Result<()> {
+    fn write_int128<T: ByteOrder>(&mut self, n: i128, nbytes: usize) -> Result<()> {
         let mut buf = [0; 16];
         T::write_int128(&mut buf, n, nbytes);
         self.write_all(&buf[0..nbytes])
@@ -1259,7 +1251,7 @@ pub trait WriteBytesExt: io::Write {
 
 /// All types that implement `Write` get methods defined in `WriteBytesExt`
 /// for free.
-impl<W: io::Write + ?Sized> WriteBytesExt for W {}
+impl<W: Write + ?Sized> WriteBytesExt for W {}
 
 /// Convert a slice of T (where T is plain old data) to its mutable binary
 /// representation.
@@ -1267,7 +1259,7 @@ impl<W: io::Write + ?Sized> WriteBytesExt for W {}
 /// This function is wildly unsafe because it permits arbitrary modification of
 /// the binary representation of any `Copy` type. Use with care.
 unsafe fn slice_to_u8_mut<T: Copy>(slice: &mut [T]) -> &mut [u8] {
-    use std::mem::size_of;
+    use core::mem::size_of;
 
     let len = size_of::<T>() * slice.len();
     slice::from_raw_parts_mut(slice.as_mut_ptr() as *mut u8, len)

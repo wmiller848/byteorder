@@ -35,7 +35,7 @@ use byteorder::{ReadBytesExt, WriteBytesExt, BigEndian, LittleEndian};
 For example:
 
 ```rust
-use std::io::Cursor;
+use nostd_io::Cursor;
 use byteorder::{BigEndian, ReadBytesExt};
 
 let mut rdr = Cursor::new(vec![2, 5, 3, 0]);
