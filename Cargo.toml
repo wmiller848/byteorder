@@ -13,19 +13,18 @@ keywords = ["byte", "endian", "big-endian", "little-endian", "binary"]
 license = "Unlicense/MIT"
 
 [lib]
-name = "byteorder"
-bench = false
+crate-type = ["lib"]
 
 [dependencies]
 nostd_io = { git = "https://github.com/wmiller848/nostd_io.git" }
 
 [dev-dependencies]
 quickcheck = { version = "0.6", default-features = false }
-rand = "0.4"
+rand = { git = "https://github.com/wmiller848/rand.git", branch = "no_std", default-features = false }
 
 [features]
-default = ["nostd"]
-nostd = []
+default = ["io"]
+io = []
 i128 = []
 
 [profile.bench]

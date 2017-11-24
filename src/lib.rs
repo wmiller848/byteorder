@@ -75,7 +75,10 @@ use core::slice;
 
 pub use io::{ReadBytesExt, WriteBytesExt};
 
+#[cfg(feature = "io")]
 mod io;
+#[cfg(feature = "io")]
+pub use io::{ReadBytesExt, WriteBytesExt};
 
 #[inline]
 fn extend_sign(val: u64, nbytes: usize) -> i64 {
