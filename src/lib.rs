@@ -40,7 +40,6 @@
 //! wtr.write_u16::<LittleEndian>(768).unwrap();
 //! assert_eq!(wtr, vec![5, 2, 0, 3]);
 //! ```
-//!
 //! # Optional Features
 //!
 //! This crate optionally provides support for 128 bit values (`i128` and `u128`)
@@ -58,7 +57,6 @@
 //! [`NativeEndian`]: type.NativeEndian.html
 //! [`Read`]: https://doc.rust-lang.org/std/io/trait.Read.html
 //! [`Write`]: https://doc.rust-lang.org/std/io/trait.Write.html
-//!
 
 #![cfg_attr(not(test), no_std)]
 #![deny(missing_docs)]

@@ -15,7 +15,6 @@ license = "Unlicense/MIT"
 [lib]
 name = "byteorder"
 bench = false
-crate-type = ["lib"]
 
 [dependencies]
 nostd_io = { git = "https://github.com/cryptsyn/nostd_io.git" }
