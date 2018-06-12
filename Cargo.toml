@@ -20,7 +20,7 @@ nostd_io = { git = "https://github.com/wmiller848/nostd_io.git" }
 
 [dev-dependencies]
 quickcheck = { version = "0.6", default-features = false }
-rand = { git = "https://github.com/cryptsyn/rand.git", branch = "no_std", default-features = false, features = ["nightly", "alloc"] }
+rand = "0.4"
 
 [features]
 default = ["io"]

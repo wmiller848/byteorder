@@ -1,4 +1,4 @@
-use nostd_io::{self, Result, Read, Write};
+use nostd_io::{Result, Read, Write};
 use core::slice;
 
 use ByteOrder;

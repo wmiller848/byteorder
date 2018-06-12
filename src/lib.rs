@@ -73,8 +73,6 @@ use core::hash::Hash;
 use core::ptr::copy_nonoverlapping;
 use core::slice;
 
-pub use io::{ReadBytesExt, WriteBytesExt};
-
 #[cfg(feature = "io")]
 mod io;
 #[cfg(feature = "io")]
