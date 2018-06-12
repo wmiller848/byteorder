@@ -20,12 +20,14 @@
 //! Read unsigned 16 bit big-endian integers from a [`Read`] type:
 //!
 //! ```rust
-//! use std::io::Cursor;
+//! extern crate nostd_io;
+//! extern crate byteorder;
+//! use nostd_io::Cursor;
 //! use byteorder::{BigEndian, ReadBytesExt};
 //!
 //! let mut rdr = Cursor::new(vec![2, 5, 3, 0]);
-//! Note that we use type parameters to indicate which kind of byte order
-//! we want!
+//! // Note that we use type parameters to indicate which kind of byte order
+//! // we want!
 //! assert_eq!(517, rdr.read_u16::<BigEndian>().unwrap());
 //! assert_eq!(768, rdr.read_u16::<BigEndian>().unwrap());
 //! ```
@@ -58,12 +60,14 @@
 //! [`Read`]: https://doc.rust-lang.org/std/io/trait.Read.html
 //! [`Write`]: https://doc.rust-lang.org/std/io/trait.Write.html
 
-#![cfg_attr(not(test), no_std)]
+#![no_std]
 #![deny(missing_docs)]
 #![doc(html_root_url = "https://docs.rs/byteorder/1.2.1")]
+#![cfg_attr(test, feature(alloc))]
 
-#![cfg(test)]
-extern crate core;
+#[cfg(test)]
+#[macro_use]
+extern crate alloc;
 extern crate nostd_io;
 
 use core::fmt::Debug;
@@ -2749,6 +2753,7 @@ mod test {
 
 #[cfg(test)]
 mod stdtests {
+    extern crate core;
     extern crate quickcheck;
     extern crate rand;
 
@@ -2865,21 +2870,21 @@ mod stdtests {
     }
 
     qc_bytes_ext!(prop_ext_u16,
-        u16, ::std::u16::MAX as u64, read_u16, write_u16);
+        u16, ::core::u16::MAX as u64, read_u16, write_u16);
     qc_bytes_ext!(prop_ext_i16,
-        i16, ::std::i16::MAX as u64, read_i16, write_i16);
+        i16, ::core::i16::MAX as u64, read_i16, write_i16);
     qc_bytes_ext!(prop_ext_u32,
-        u32, ::std::u32::MAX as u64, read_u32, write_u32);
+        u32, ::core::u32::MAX as u64, read_u32, write_u32);
     qc_bytes_ext!(prop_ext_i32,
-        i32, ::std::i32::MAX as u64, read_i32, write_i32);
+        i32, ::core::i32::MAX as u64, read_i32, write_i32);
     qc_bytes_ext!(prop_ext_u64,
-        u64, ::std::u64::MAX as u64, read_u64, write_u64);
+        u64, ::core::u64::MAX as u64, read_u64, write_u64);
     qc_bytes_ext!(prop_ext_i64,
-        i64, ::std::i64::MAX as u64, read_i64, write_i64);
+        i64, ::core::i64::MAX as u64, read_i64, write_i64);
     qc_bytes_ext!(prop_ext_f32,
-        f32, ::std::u64::MAX as u64, read_f32, write_f32);
+        f32, ::core::u64::MAX as u64, read_f32, write_f32);
     qc_bytes_ext!(prop_ext_f64,
-        f64, ::std::i64::MAX as u64, read_f64, write_f64);
+        f64, ::core::i64::MAX as u64, read_f64, write_f64);
 
     #[cfg(feature = "i128")]
     qc_bytes_ext!(prop_ext_u128, Wi128<u128>, 16 + 1, read_u128, write_u128);
@@ -3023,6 +3028,7 @@ mod stdtests {
         ($name:ident, $ty_int:ty, $read:ident, $write:ident, $zero:expr) => {
             mod $name {
                 use core::mem::size_of;
+                use alloc::Vec;
                 use {ByteOrder, BigEndian, NativeEndian, LittleEndian};
                 use super::qc_unsized;
                 #[allow(unused_imports)]

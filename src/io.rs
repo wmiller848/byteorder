@@ -14,7 +14,9 @@ use ByteOrder;
 /// Read unsigned 16 bit big-endian integers from a [`Read`]:
 ///
 /// ```rust
+/// extern crate core;
 /// extern crate nostd_io;
+/// extern crate byteorder;
 /// use nostd_io::Cursor;
 /// use byteorder::{BigEndian, ReadBytesExt};
 ///
@@ -43,7 +45,9 @@ pub trait ReadBytesExt: Read {
     /// Read unsigned 8 bit integers from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -74,7 +78,9 @@ pub trait ReadBytesExt: Read {
     /// Read unsigned 8 bit integers from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -102,7 +108,9 @@ pub trait ReadBytesExt: Read {
     /// Read unsigned 16 bit big-endian integers from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -130,7 +138,9 @@ pub trait ReadBytesExt: Read {
     /// Read signed 16 bit big-endian integers from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -158,7 +168,9 @@ pub trait ReadBytesExt: Read {
     /// Read unsigned 24 bit big-endian integers from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -185,7 +197,9 @@ pub trait ReadBytesExt: Read {
     /// Read signed 24 bit big-endian integers from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -212,7 +226,9 @@ pub trait ReadBytesExt: Read {
     /// Read unsigned 32 bit big-endian integers from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -239,7 +255,9 @@ pub trait ReadBytesExt: Read {
     /// Read signed 32 bit big-endian integers from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -266,7 +284,9 @@ pub trait ReadBytesExt: Read {
     /// Read an unsigned 64 bit big-endian integer from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -293,7 +313,9 @@ pub trait ReadBytesExt: Read {
     /// Read a signed 64 bit big-endian integer from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -380,7 +402,9 @@ pub trait ReadBytesExt: Read {
     /// Read an unsigned n-byte big-endian integer from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -406,7 +430,9 @@ pub trait ReadBytesExt: Read {
     /// Read an unsigned n-byte big-endian integer from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -451,7 +477,9 @@ pub trait ReadBytesExt: Read {
     /// Read a big-endian single-precision floating point number from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use core::f32;
     /// use nostd_io::Cursor;
     ///
@@ -483,7 +511,9 @@ pub trait ReadBytesExt: Read {
     /// Read a big-endian double-precision floating point number from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use core::f64;
     /// use nostd_io::Cursor;
     ///
@@ -518,7 +548,9 @@ pub trait ReadBytesExt: Read {
     /// Read a sequence of unsigned 16 bit big-endian integers from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -554,7 +586,9 @@ pub trait ReadBytesExt: Read {
     /// Read a sequence of unsigned 32 bit big-endian integers from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -590,7 +624,9 @@ pub trait ReadBytesExt: Read {
     /// Read a sequence of unsigned 64 bit big-endian integers from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -669,7 +705,9 @@ pub trait ReadBytesExt: Read {
     /// Read a sequence of signed 16 bit big-endian integers from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -705,7 +743,9 @@ pub trait ReadBytesExt: Read {
     /// Read a sequence of signed 32 bit big-endian integers from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -741,7 +781,9 @@ pub trait ReadBytesExt: Read {
     /// Read a sequence of signed 64 bit big-endian integers from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use nostd_io::Cursor;
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -821,8 +863,11 @@ pub trait ReadBytesExt: Read {
     /// from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
+    /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use core::f32;
-    /// use std::io::Cursor;
+    /// use nostd_io::Cursor;
     ///
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -866,7 +911,9 @@ pub trait ReadBytesExt: Read {
     /// from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use core::f32;
     /// use nostd_io::Cursor;
     ///
@@ -904,8 +951,11 @@ pub trait ReadBytesExt: Read {
     /// from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
+    /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use core::f64;
-    /// use std::io::Cursor;
+    /// use nostd_io::Cursor;
     ///
     /// use byteorder::{BigEndian, ReadBytesExt};
     ///
@@ -955,7 +1005,9 @@ pub trait ReadBytesExt: Read {
     /// from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
+    /// extern crate byteorder;
     /// use core::f64;
     /// use nostd_io::Cursor;
     ///
