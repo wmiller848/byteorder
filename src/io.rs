@@ -2,6 +2,7 @@ use nostd_io::{Result, Read, Write};
 use core::slice;
 
 use ByteOrder;
+
 /// Extends [`Read`] with methods for reading numbers. (For `nostd_io`.)
 ///
 /// Most of the methods defined here have an unconstrained type parameter that
@@ -450,8 +451,9 @@ pub trait ReadBytesExt: Read {
     /// Read a big-endian single-precision floating point number from a `Read`:
     ///
     /// ```rust
+    /// extern crate core;
     /// extern crate nostd_io;
-    /// use std::f32;
+    /// use core::f32;
     /// use nostd_io::Cursor;
     ///
     /// use byteorder::{BigEndian, ReadBytesExt};

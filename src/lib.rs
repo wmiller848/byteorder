@@ -61,10 +61,10 @@
 //!
 
 #![deny(missing_docs)]
-#![no_std]
+#![cfg_attr(not(test), no_std)]
 #![doc(html_root_url = "https://docs.rs/byteorder/1.2.1")]
 
-#[cfg(feature = "std")]
+#![cfg(test)]
 extern crate core;
 extern crate nostd_io;
 
@@ -73,9 +73,7 @@ use core::hash::Hash;
 use core::ptr::copy_nonoverlapping;
 use core::slice;
 
-#[cfg(feature = "io")]
 mod io;
-#[cfg(feature = "io")]
 pub use io::{ReadBytesExt, WriteBytesExt};
 
 #[inline]
@@ -2752,7 +2750,6 @@ mod test {
 }
 
 #[cfg(test)]
-#[cfg(feature = "nostd_io")]
 mod stdtests {
     extern crate quickcheck;
     extern crate rand;

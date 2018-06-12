@@ -13,6 +13,8 @@ keywords = ["byte", "endian", "big-endian", "little-endian", "binary"]
 license = "Unlicense/MIT"
 
 [lib]
+name = "byteorder"
+bench = false
 crate-type = ["lib"]
 
 [dependencies]
@@ -23,8 +25,7 @@ quickcheck = { version = "0.6", default-features = false }
 rand = "0.4"
 
 [features]
-default = ["io"]
-io = []
+default = []
 i128 = []
 
 [profile.bench]
