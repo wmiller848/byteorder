@@ -60,8 +60,8 @@
 //! [`Write`]: https://doc.rust-lang.org/std/io/trait.Write.html
 //!
 
-#![deny(missing_docs)]
 #![cfg_attr(not(test), no_std)]
+#![deny(missing_docs)]
 #![doc(html_root_url = "https://docs.rs/byteorder/1.2.1")]
 
 #![cfg(test)]

@@ -451,7 +451,6 @@ pub trait ReadBytesExt: Read {
     /// Read a big-endian single-precision floating point number from a `Read`:
     ///
     /// ```rust
-    /// extern crate core;
     /// extern crate nostd_io;
     /// use core::f32;
     /// use nostd_io::Cursor;
@@ -485,7 +484,7 @@ pub trait ReadBytesExt: Read {
     ///
     /// ```rust
     /// extern crate nostd_io;
-    /// use std::f64;
+    /// use core::f64;
     /// use nostd_io::Cursor;
     ///
     /// use byteorder::{BigEndian, ReadBytesExt};
@@ -822,7 +821,7 @@ pub trait ReadBytesExt: Read {
     /// from a `Read`:
     ///
     /// ```rust
-    /// use std::f32;
+    /// use core::f32;
     /// use std::io::Cursor;
     ///
     /// use byteorder::{BigEndian, ReadBytesExt};
@@ -868,7 +867,7 @@ pub trait ReadBytesExt: Read {
     ///
     /// ```rust
     /// extern crate nostd_io;
-    /// use std::f32;
+    /// use core::f32;
     /// use nostd_io::Cursor;
     ///
     /// use byteorder::{BigEndian, ReadBytesExt};
@@ -905,7 +904,7 @@ pub trait ReadBytesExt: Read {
     /// from a `Read`:
     ///
     /// ```rust
-    /// use std::f64;
+    /// use core::f64;
     /// use std::io::Cursor;
     ///
     /// use byteorder::{BigEndian, ReadBytesExt};
@@ -957,7 +956,7 @@ pub trait ReadBytesExt: Read {
     ///
     /// ```rust
     /// extern crate nostd_io;
-    /// use std::f64;
+    /// use core::f64;
     /// use nostd_io::Cursor;
     ///
     /// use byteorder::{BigEndian, ReadBytesExt};
